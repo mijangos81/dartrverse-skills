@@ -49,9 +49,12 @@ Requires [Claude Code](https://claude.com/claude-code). Pick one:
 **Personal install (recommended)** — available in every project:
 
 ```bash
-git clone https://github.com/green-striped-gecko/dartrverse-skills.git
+git clone https://github.com/mijangos81/dartrverse-skills.git
 ln -s "$(pwd)/dartrverse-skills/skills/dartr-function-review" ~/.claude/skills/
 ```
+
+(The repository is private and will be transferred to `green-striped-gecko`
+once org access is arranged; the clone URL will redirect after transfer.)
 
 Update later with `git pull` — the symlink picks up changes automatically.
 

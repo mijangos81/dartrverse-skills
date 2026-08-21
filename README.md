@@ -18,8 +18,7 @@ Current skills:
 
 ## What the skill does
 
-One invocation covers one function, end to end. The design principle,
-borrowed from DArT's Morpheus review orchestrator: **the AI is advisory —
+One invocation covers one function, end to end. **the AI is advisory —
 it never changes code on its own judgement.** Every change is approved by
 a dartR member first, and behaviour-affecting changes require approval of
 the *consequence*, stated in plain words, not just the fix.

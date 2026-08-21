@@ -64,7 +64,7 @@ The canonical anatomy of a `gl.*` function, in order:
   (no full stop), `@family`, `@description` (one short paragraph),
   `@details`, `@param` (every parameter, each ending with
   `[required]` or `[default <value>]`), `@return`, `@author`
-  (`Custodian: <name> -- Post to \url{https://groups.google.com/d/forum/dartr}`),
+  (see DOC7 for the required internal structure),
   `@examples`, `@export`. `@references` and `@seealso` where relevant.
 - **DOC2** [confirmed] The `verbose` param text is standard:
   "Verbosity: 0, silent or fatal errors; 1, begin and end; 2, brief progress
@@ -82,6 +82,17 @@ The canonical anatomy of a `gl.*` function, in order:
   code as it stands, and every verbose level promised must actually print.
 - **DOC6** [proposed] ASCII only in roxygen (no curly quotes, arrows,
   accented characters) — safest for the PDF manual across platforms.
+- **DOC7** [proposed] `@author` must state both an author and a custodian as
+  two separate labelled parts, even when they are the same person:
+  `Author(s): <name(s)>. Custodian: <name> -- Post to
+  \url{https://groups.google.com/d/forum/dartr}`. A block naming only a
+  custodian, with no `Author(s):` line, is a finding under this rule —
+  reported against DOC7 specifically, not folded into DOC1, since DOC1's
+  [confirmed] status only covers tag *presence*, not this internal
+  structure. Not [confirmed]: many current files state only
+  `Custodian: <name>` with no separate Author(s) line (e.g. `gl2snapper.r`,
+  `gl2phylip.r`, `gl.propShared.r` has the reverse gap — an author with no
+  Custodian label at all).
 
 ## VRB — Verbosity and messaging
 

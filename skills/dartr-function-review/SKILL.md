@@ -1,7 +1,7 @@
 ---
 name: dartr-function-review
 description: Standardized review-and-improve workflow for a single dartRverse function (gl.*, utils.*). Use when asked to review, improve, debug, audit, or standardize a dartR function as part of the function-review campaign, e.g. "review gl.report.callrate", "run the function review on gl.impute", "next function in the manifest". Produces an advisory report first; changes are applied only after a dartR team member approves specific findings.
-version: 1.3.1
+version: 1.4.0
 ---
 
 # dartR function review

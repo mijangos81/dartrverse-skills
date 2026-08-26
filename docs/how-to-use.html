@@ -125,7 +125,8 @@ ln -s "$(pwd)/dartrverse-skills/skills/dartr-function-review" ~/.claude/skills/<
       <span class="who">2 · Start</span>
       <h3>Ask Claude Code</h3>
       <pre><code>review gl.report.callrate</code></pre>
-      <p class="small">Open Claude Code in the package folder, on your <code>dev_&lt;name&gt;</code> branch. The skill claims the function in the manifest. Two people cannot claim one function.</p>
+      <p class="small">Open Claude Code in the package folder, on your <code>dev_&lt;name&gt;</code> branch. The skill claims the function for you in the manifest. Two people cannot claim one function.</p>
+      <p class="small"><b>The manifest</b> is <code>function-review/manifest.csv</code> in the package repository: one row per function — who reviews it, and its status (<code>in-review</code> → <code>awaiting-approval</code> → <code>pr-open</code> → <code>done</code>). It shows campaign progress at a glance.</p>
     </div>
     <div class="arrow">↓</div>
 

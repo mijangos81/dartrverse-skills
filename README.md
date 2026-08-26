@@ -154,8 +154,8 @@ The full trial report format is in
    Right scope?
 5. Claiming: a `manifest.csv` on `dev` (current assumption) vs GitHub
    issues per function.
-6. Transfer this repository to `green-striped-gecko` (currently private
-   under `mijangos81` because Luis lacks org repo-creation rights).
+6. Transfer this repository to `green-striped-gecko` (currently under
+   `mijangos81` because Luis lacks org repo-creation rights).
 
 ## How to give feedback
 
@@ -184,8 +184,8 @@ ln -s "$(pwd)/dartrverse-skills/skills/dartr-function-review" ~/.claude/skills/
 ```
 
 Update later with `git pull` — the symlink picks up changes automatically.
-(The repository is private and will be transferred to `green-striped-gecko`
-once org access is arranged; the clone URL will redirect after transfer.)
+(The repository will be transferred to `green-striped-gecko` once org
+access is arranged; the clone URL will redirect after transfer.)
 
 **Per-project install** — copy into a package checkout:
 

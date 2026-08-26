@@ -1,7 +1,7 @@
 ---
 name: dartr-function-review
 description: Standardized review-and-improve workflow for a single dartRverse function (gl.*, utils.*). Use when asked to review, improve, debug, audit, or standardize a dartR function as part of the function-review campaign, e.g. "review gl.report.callrate", "run the function review on gl.impute", "next function in the manifest". Produces an advisory report first; changes are applied only after a dartR team member approves specific findings.
-version: 1.4.0
+version: 2.0.0
 ---
 
 # dartR function review
@@ -90,11 +90,17 @@ MRs: `references/style.md` — read it before writing any of the three.
       consequence, not just the fix. The member can always answer in
       free text instead ("apply 1 and 3, defer the rest").
 
-   **Sequencing (hard rule):** verdicts and the table (a–b) must be the
-   FINAL text of their turn, with no tool call after them — a tool dialog
-   in the same turn takes over the screen and the member never sees the
-   table. End the turn, let the member read, and present the boxes (c) in
-   the next turn once they respond.
+   **Sequencing (hard rule):** print (a–b), then call AskUserQuestion, in
+   ONE turn. Never end the turn after the table and wait to be asked for
+   the boxes — a member who has to type "show me the boxes" to approve
+   their own review is being made to do the skill's work.
+
+   The dialog covers the table while it is open, so the boxes carry their
+   own context: each question text names the change and states what
+   happens if it is applied, and each option description states what that
+   choice does. Write them so a member who never scrolls back to the table
+   can still decide. The table stays on screen as the summary; the report
+   file stays as the evidence.
    **Stop after the boxes are answered or the member replies.**
 
 ## Phase B — Approval (human)

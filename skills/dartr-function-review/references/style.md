@@ -72,10 +72,16 @@ line in the verdict section is enough praise when deserved.
 **Chat presentation (Phase A hand-off)** — under a minute to read:
 verdicts first with one driving sentence, then the findings table
 (# / Issue / What happens / Proposed fix / Severity — one line per cell,
-consequences in plain words), then the approval boxes. Route detail to
-the report file; do not paste it into chat. A member should be able to
-decide from the table alone; the report exists for the member who wants
-the evidence.
+consequences in plain words), then the approval boxes, all in one turn.
+Route detail to the report file; do not paste it into chat. A member
+should be able to decide from the table alone; the report exists for the
+member who wants the evidence.
+
+The boxes appear over the table, so they repeat what the member needs
+rather than pointing back at it. "Change 1 (see table)" is a failure;
+"Restrict gl.Ho to SNP data. gl.Ho() on a SilicoDArT object stops
+returning a value and errors instead" is what a question text should say.
+Keep each option description to the outcome of choosing it.
 
 **MR bodies** — structure per `pr-template.md`; readable in under a
 minute; detail beyond that belongs in the linked report. State skipped

@@ -20,7 +20,7 @@
     background: var(--bg);
     color: var(--ink);
     font-family: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
-    font-size: 19px;
+    font-size: 22px;
     line-height: 1.5;
     margin: 0;
     padding: 56px 20px 80px;
@@ -32,8 +32,8 @@
     text-wrap: balance;
     margin: 0;
   }
-  h1 { font-size: 3rem; font-weight: 700; letter-spacing: -0.01em; }
-  h3 { font-size: 1.45rem; font-weight: 700; }
+  h1 { font-size: 3.4rem; font-weight: 700; letter-spacing: -0.01em; }
+  h3 { font-size: 1.6rem; font-weight: 700; }
   code, pre {
     font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
     font-size: 0.85em;
@@ -60,7 +60,7 @@
     font-size: 0.8rem; font-weight: 600; text-transform: uppercase;
     letter-spacing: 0.13em; color: var(--accent-ink); margin: 0 0 12px;
   }
-  .lede { font-size: 1.3rem; margin: 18px 0 0; max-width: 30ch; text-wrap: balance; }
+  .lede { font-size: 1.5rem; margin: 18px 0 0; max-width: 30ch; text-wrap: balance; }
   .lede b { color: var(--accent-ink); }
 
   .flow { margin-top: 52px; }
@@ -77,8 +77,8 @@
     letter-spacing: 0.12em; color: var(--accent-ink); display: block; margin-bottom: 6px;
   }
   .step.gate .who { color: var(--gate); }
-  .step p { margin: 10px 0 0; font-size: 1.02rem; max-width: 52ch; }
-  .step p.small { color: var(--muted); font-size: 0.95rem; }
+  .step p { margin: 10px 0 0; font-size: 1.05rem; max-width: 52ch; }
+  .step p.small { color: var(--muted); font-size: 1rem; }
 
   .arrow {
     text-align: center;
@@ -118,7 +118,6 @@
       <h3>Get the skill</h3>
       <pre><code>git clone https://github.com/mijangos81/dartrverse-skills.git
 ln -s "$(pwd)/dartrverse-skills/skills/dartr-function-review" ~/.claude/skills/</code></pre>
-      <p class="small">The repo is private. Ask Luis for access.</p>
     </div>
     <div class="arrow">↓</div>
 
@@ -154,29 +153,15 @@ ln -s "$(pwd)/dartrverse-skills/skills/dartr-function-review" ~/.claude/skills/<
     <div class="step gate">
       <span class="who">6 · You decide</span>
       <h3>OK the commit</h3>
-      <p class="small">Claude shows the commit message and the PR title. Nothing is pushed until you say OK. Then: one PR per function, to <code>dev</code>, with the report linked.</p>
+      <p class="small">Claude shows the commit message and the pull request title. Nothing is pushed until you say OK. Then: one pull request per function, to <code>dev</code>, with the report linked.</p>
     </div>
 
     <div class="lane-title"><h2>Custodian</h2><span class="who">close the loop</span></div>
 
     <div class="step gate">
       <span class="who">7 · Merge</span>
-      <h3>Review and merge the PR</h3>
-      <p class="small">Each PR has one function, its report, and its regression test. Merge to <code>dev</code>. The manifest row becomes <code>done</code>.</p>
-    </div>
-    <div class="arrow">↓</div>
-
-    <div class="step gate">
-      <span class="who">8 · Ratify</span>
-      <h3>Vote on the 14 proposed rules</h3>
-      <p class="small">Open a GitHub issue with the rule ID, e.g. <code>DAT6: too strict</code>. Proposed rules stay advisory until the team ratifies them.</p>
-    </div>
-    <div class="arrow">↓</div>
-
-    <div class="step gate">
-      <span class="who">9 · Improve the skill</span>
-      <h3>Report wrong findings</h3>
-      <p class="small">Wrong or missed findings are the best feedback. They become test fixtures for the skill.</p>
+      <h3>Review and merge the pull request</h3>
+      <p class="small">Each pull request has one function, its report, and its regression test. Merge to <code>dev</code>. The manifest row becomes <code>done</code>.</p>
     </div>
   </section>
 

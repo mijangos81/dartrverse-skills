@@ -14,7 +14,7 @@ Current skills:
 
 | Skill | Purpose |
 |---|---|
-| `dartr-function-review` (v1.3.1) | Review-and-improve workflow for one dartRverse function: advisory review → member approval → apply → PR |
+| `dartr-function-review` (v3.0.0) | Review-and-improve workflow for one dartRverse function, existing or newly written by a member: advisory review → member approval → apply → PR |
 
 ## What the skill does
 

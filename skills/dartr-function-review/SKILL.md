@@ -1,13 +1,20 @@
 ---
 name: dartr-function-review
-description: Standardized review-and-improve workflow for a single dartRverse function (gl.*, utils.*). Use when asked to review, improve, debug, audit, or standardize a dartR function as part of the function-review campaign, e.g. "review gl.report.callrate", "run the function review on gl.impute", "next function in the manifest". Produces an advisory report first; changes are applied only after a dartR team member approves specific findings.
-version: 2.0.0
+description: Standardized review-and-improve workflow for a single dartRverse function (gl.*, utils.*), existing or new. Use when asked to review, improve, debug, audit, or standardize a dartR function as part of the function-review campaign, e.g. "review gl.report.callrate", "run the function review on gl.impute", "next function in the manifest" — and when a dartR member wants to add a function they have already written to a dartR.* package, e.g. "add my gl.foo from ~/foo.R to dartR.popgen", "format my new function for dartR", "contribute this function". Produces an advisory report first; changes are applied only after a dartR team member approves specific findings.
+version: 3.0.0
 ---
 
 # dartR function review
 
 One invocation = one function, end to end: claim → baseline → review →
 report → human approval → apply approved changes → verify → PR.
+
+Two entries, one workflow. An **existing** function is already in a
+dartR.* package. A **new** function is one a dartR member has written and
+tested on their own and wants added to a package: it goes through Intake
+first, then the same Phases A–C. The review never changes what the
+member's code computes without approval; formatting it to house
+conventions is the bulk of the work.
 
 **The prime rule: the review is advisory.** Phase A never edits the function.
 No change — however obvious — is applied until a dartR member has approved
@@ -20,9 +27,28 @@ BLOCKERs). Report format: `references/report-contract.md`. Commit/PR format:
 `references/pr-template.md`. Prose style for reports, chat hand-offs, and
 MRs: `references/style.md` — read it before writing any of the three.
 
+## Intake — new functions only
+
+Skip this section for a function already in a package.
+
+1. **Ask for what is missing** (one short message, only for items not
+   already given): path to the member's file, target package
+   (`dartR.base`, `dartR.popgen`, …), and one sentence on what the
+   function should do. That sentence is the Spec axis reference when the
+   file has no roxygen documentation.
+2. **Check the name is free.** Grep all `dartR.*` checkouts for an
+   existing function or file of the same name; if one exists, stop and
+   report it — this is then a review of that function, not a new one.
+3. **Place the file unchanged.** Sync `dev_<name>` with `origin/dev`
+   (GIT2), copy the member's file to `R/<function>.R` exactly as given,
+   and commit nothing yet. The member's code as written is the baseline
+   every later change is measured against.
+4. **Manifest row** `function,package,family,claimed_by,status` with
+   status `new`, claimed by the member. Then continue at Phase A step 2.
+
 ## Phase A — Review (read-only)
 
-1. **Sync and claim.** Ensure the local `dev_<name>` branch is synced with
+1. **Sync and claim** (existing functions; new functions did this in Intake). Ensure the local `dev_<name>` branch is synced with
    `origin/dev` (conventions GIT2). Open `function-review/manifest.csv` on
    `dev`; if the function is claimed by someone else, stop and report that.
    Otherwise add/update its row: `function,package,family,claimed_by,status`
@@ -43,7 +69,9 @@ MRs: `references/style.md` — read it before writing any of the three.
    metrics like TrimmedSequence are needed): returned object dimensions,
    ploidy, key numerical values, loc/ind.metrics row counts. Snapshot what
    the function DOES today, bugs included — the baseline detects change, it
-   does not assert correctness. If output is stochastic, set a seed; if a
+   does not assert correctness. For a new function, the baseline is the
+   member's code as placed in Intake step 3; load it with
+   `devtools::load_all()` so it runs against the package's own helpers. If output is stochastic, set a seed; if a
    snapshot is impracticable (pure plotting, interactive), record that in
    the report's Coverage section with a reason — never silently skip.
 
@@ -55,7 +83,10 @@ MRs: `references/style.md` — read it before writing any of the three.
      roxygen documentation, the function's name, and its `@description`?
      Test claims empirically with `devtools::load_all()` on reference data.
      Check the dartR Google Group / GitHub issues if a known complaint
-     exists about this function.
+     exists about this function. For a new function, compare behaviour with
+     the member's roxygen if present, otherwise with the one-sentence
+     purpose from Intake; a missing roxygen block is a DOC finding, not a
+     Spec finding.
    Apply the recurring-bug lenses (the historical classes in DAT/PLT rules):
    ploidy loss, metadata desync, plot/results coupling, inverted filter
    logic, platform-specific calls, FBM densification, silent API traps.
@@ -89,6 +120,11 @@ MRs: `references/style.md` — read it before writing any of the three.
       whose text states the consequence explicitly — approval of the
       consequence, not just the fix. The member can always answer in
       free text instead ("apply 1 and 3, defer the rest").
+      **New functions:** all changes that cannot alter output, arguments or
+      accepted input (roxygen, preamble order, verbosity messages, style)
+      go into ONE question with one option, "Apply house formatting
+      (changes N–M)", so the member is not asked twenty times. Everything
+      else is boxed as for an existing function.
 
    **Sequencing (hard rule):** print (a–b), then call AskUserQuestion, in
    ONE turn. Never end the turn after the table and wait to be asked for
@@ -119,6 +155,11 @@ deferred, with any modification verbatim). Nothing else in this phase.
    stop and report it. Update snapshots only for approved behavior changes.
    Run `devtools::document()` if any roxygen changed; run the function on
    reference data at `verbose = 3` end to end.
+   **New functions** also: confirm `@export` and the NAMESPACE entry after
+   `devtools::document()`; add a NEWS entry under the development version
+   ("New function `gl.foo()` …", crediting the member); run
+   `devtools::check()` and report any NOTE/WARNING/ERROR the new file
+   introduces. The PR title is `add <function>: <what it does>`.
 3. If applying reveals a new problem: do not fix it opportunistically.
    Add it to the report as an addendum finding and ask for approval
    (a one-line ask in chat is enough).
@@ -135,7 +176,8 @@ deferred, with any modification verbatim). Nothing else in this phase.
    and wait for the member's OK or edits. Commit, push, and open the PR
    only after that reply. Link the report in the PR body.
 5. Update the manifest row: status `pr-open`, PR number. After merge:
-   status `done`.
+   status `done`. (Status lifecycle: `new` for a new function or `in-review` for an
+   existing one → `awaiting-approval` → `pr-open` → `done`.)
 
 ## Escalation gate (always, regardless of approvals)
 
@@ -144,6 +186,8 @@ function's signature (API1–API3) require the member's explicit approval of
 that consequence stated in those words — "fix the bug" does not cover
 "…and the results change". Before merging such a change, grep the sibling
 `dartR.*` packages and dartr2shiny for callers, and add a NEWS entry.
+A new function has no callers yet: its gate is the member's approval
+alone, and the report says "caller grep: not applicable (new function)".
 
 ## Provenance and self-test
 

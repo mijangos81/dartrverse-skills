@@ -13,6 +13,7 @@ a missing section says nothing.
 ```
 # Review: gl.filter.hamming (dartR.base)
 - Family mode: modify
+- Origin: existing   (or: new — contributed by <member>)
 - Date: 2026-08-21
 - Reviewer: Claude (<model>), dartr-function-review v1.0.0
 - Package commit: <short SHA of the reviewed state>
@@ -102,6 +103,7 @@ prose:
   "function": "gl.filter.hamming",
   "package": "dartR.base",
   "family": "modify",
+  "origin": "existing",
   "skill_version": "1.0.0",
   "commit": "<sha>",
   "verdict_standards": "needs_work",

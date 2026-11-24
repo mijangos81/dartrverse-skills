@@ -1,7 +1,7 @@
 ---
 name: dartr-function-review
 description: Standardized review-and-improve workflow for a single dartRverse function (gl.*, utils.*), existing or new. Use when asked to review, improve, debug, audit, or standardize a dartR function as part of the function-review campaign, e.g. "review gl.report.callrate", "run the function review on gl.impute", "next function in the manifest" — and when a dartR member wants to add a function they have already written to a dartR.* package, e.g. "add my gl.foo from ~/foo.R to dartR.popgen", "format my new function for dartR", "contribute this function". Produces an advisory report first; changes are applied only after a dartR team member approves specific findings.
-version: 3.0.0
+version: 3.1.0
 ---
 
 # dartR function review
@@ -90,6 +90,13 @@ Skip this section for a function already in a package.
    Apply the recurring-bug lenses (the historical classes in DAT/PLT rules):
    ploidy loss, metadata desync, plot/results coupling, inverted filter
    logic, platform-specific calls, FBM densification, silent API traps.
+   **Plot registration:** every plot a function draws must be kept for
+   `gl.last.plot()` (dartR.base >= 1.3.2): ggplots via
+   `utils.plot.keep(<plot>, "<name>")` before the `plot.file` block (one
+   call per plot, unique names; a summary table saved with plot.file is
+   kept as "table"); base R graphics via
+   `utils.plot.keep(if (<drawn>) utils.plot.record(), "plot")` after the
+   drawing succeeded. A plotting function without it is a finding.
    For every finding: severity, confidence, rule ID, `file:line`, a concrete
    failure scenario, and a proposed change. False-positive discipline: when
    a rule and clearly-newer code intent disagree, flag the rule, not the
@@ -160,6 +167,19 @@ deferred, with any modification verbatim). Nothing else in this phase.
    ("New function `gl.foo()` …", crediting the member); run
    `devtools::check()` and report any NOTE/WARNING/ERROR the new file
    introduces. The PR title is `add <function>: <what it does>`.
+   **Plotting functions (new or changed plot code) — one-off plot check.**
+   Run once by hand (scratch script, NOT a permanent test in `tests/`;
+   these would lengthen the test suite too much) and report the result:
+   - call the function with `plot.display = FALSE` (ggplot) or on a
+     recording device (base graphics: `pdf(NULL); dev.control("enable")`)
+     and confirm `gl.last.plot()` returns its plot(s) under the expected
+     names, and that the return value of the function is unchanged;
+   - confirm every kept ggplot draws on its own in a fresh environment
+     (`ggplot2::ggplot_build(p)` without error) and matches what
+     `plot.file` saves (equal `ggplot2::layer_data()`);
+   - base graphics: with the plot not drawn (`plot.display = FALSE`),
+     `gl.last.plot()` must report that no plot was drawn, not return an
+     older plot.
 3. If applying reveals a new problem: do not fix it opportunistically.
    Add it to the report as an addendum finding and ask for approval
    (a one-line ask in chat is enough).
